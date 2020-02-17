@@ -1,0 +1,49 @@
+<h1>Productos</h1>
+<hr>
+
+<div class="row animated fadeIn fast">
+  <div class="col-md-12 text-right">
+    <button [routerLink]="['/producto', 'nuevo']" class="btn btn-outline-primary" type="button" name="button">Nuevo producto...</button>
+  </div>
+</div>
+<br>
+
+<div class="row animated fadeIn fast">
+  <div class="col-md-12">
+    <div class="table-responsive-sm">
+      <table class="table">
+        <thead class="thead-inverse">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Precio</th>
+            <th scope="col" class="text-right">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let k of productos | keys; let i = index">
+            <td>{{ i+1 }}</td>
+            <td>{{ productos[k].nombre }}</td>
+            <td>{{ productos[k].marca }}</td>
+            <td>{{ productos[k].precio }}</td>
+            <td class="text-right w120">
+              <button [routerLink]="['/producto', k]" type="button" class="btn btn-outline-success">Editar</button>
+              &nbsp;
+              <button (click)="borraProducto(k)" type="button" class="btn btn-outline-danger">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="(productos | keys).length === 0 && !loading"
+      class="alert alert-info" role="alert">
+        <strong>No hay registros que mostrar</strong>
+      </div>
+
+      <div *ngIf="loading"
+      class="alert alert-warning" role="alert">
+        <strong>Cargando</strong> por favor espere
+      </div>
+    </div>
+  </div>
+</div>

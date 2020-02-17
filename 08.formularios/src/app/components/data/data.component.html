@@ -1,0 +1,131 @@
+<h4>Formularios <small>data</small></h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+
+  <div formGroupName="nombrecompleto">
+
+    <div class="form-group row" [ngClass]="{'has-danger': !forma.get('nombrecompleto.nombre').valid}">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Nombre"
+               formControlName="nombre">
+        <div class="form-control-feedback" *ngIf="forma.get('nombrecompleto.nombre').errors?.required">
+          El nombre es necesario
+        </div>
+        <div class="form-control-feedback" *ngIf="forma.get('nombrecompleto.nombre').minlength">
+          Por lo menos 3 caracteres
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" [ngClass]="{'has-danger': !forma.get('nombrecompleto.apellido').valid}">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Apellido"
+               formControlName="apellido">
+       <div class="form-control-feedback" *ngIf="forma.get('nombrecompleto.apellido').errors?.required">
+         El apellido es necesario
+       </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('correo').valid}">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="email"
+             placeholder="Correo electrónico"
+             formControlName="correo">
+     <div class="form-control-feedback" *ngIf="forma.controls['correo'].errors?.required">
+       El correo es necesario
+     </div>
+     <div class="form-control-feedback" *ngIf="forma.controls['correo'].errors?.pattern">
+       El correo debe ser válido
+     </div>
+    </div>
+  </div>
+
+  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('username').valid}">
+    <label class="col-2 col-form-label">Username</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="text"
+             placeholder="Username"
+             formControlName="username">
+     <div class="form-control-feedback" *ngIf="forma.controls['username'].errors?.required">
+       El username es necesario
+     </div>
+    </div>
+  </div>
+
+  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('password1').valid}">
+    <label class="col-2 col-form-label">Password</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="password"
+             placeholder="Password"
+             formControlName="password1">
+     <div class="form-control-feedback" *ngIf="forma.controls['password1'].errors?.required">
+       El password es necesario
+     </div>
+    </div>
+  </div>
+
+  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('password2').valid}">
+    <label class="col-2 col-form-label">Repetir</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="password"
+             placeholder="Repetir Password"
+             formControlName="password2">
+     <div class="form-control-feedback" *ngIf="forma.controls['password2'].errors?.required">
+       Repetir el password es necesario
+     </div>
+
+     <div class="form-control-feedback" *ngIf="forma.controls['password2'].errors?.noIgual">
+       El password no coincide
+     </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Pasatiempos</label>
+    <div class="col-md-8" formArrayName="pasatiempos">
+
+      <input *ngFor="let pasatiempo of forma.controls['pasatiempos'].controls; index as i "
+              [formControlName] = "i"
+              type="text"
+              class="form-control">
+
+
+    </div>
+    <button type="button" class="btn btn-primary" (click)="agregarPasatiempo()">Nuevo</button>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+  {{ forma.valid }}
+  <br>
+  {{ forma.status }}
+
+</form>
